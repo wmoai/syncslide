@@ -1,0 +1,15 @@
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io.connect();
+  socket.on('news', function (data) {
+    console.log(data);
+  });
+  socket.on('broadcastSlide', function (data) {
+    console.log(data);
+  });
+
+  var changeSlide = function(num) {
+    socket.emit('changeSlide', { num : num });
+  }
+</script>
+<input type="button" value="test" onclick="changeSlide(2)" />
