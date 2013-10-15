@@ -5,13 +5,22 @@ var app = require('express')()
 server.listen(8080);
 
 app.get('/', function (req, res) {
-  res.sendfile(__dirname + '/index.html');
+  res.sendfile(__dirname + '/slide.html');
 });
 
+// var app =require('http').createServer()
+  // , io = require('socket.io').listen(app)
+  // , fs = require('fs');
+
+// app.listen(8080);
+
+
 io.sockets.on('connection', function(socket) {
-  socket.emit('broadcastSlide', { num: 0 });
-  socket.on('changeSlide', function (data) {
-    socket.broadcast.emit('broadcastSlide', { num: data.num });
+  // socket.emit('currentSlide', { num: 0 });
+  console.log(socket.handshake);
+  socket.on('setCurSlide', function (data) {
+    curSlide = data.num;
+    socket.broadcast.emit('curSlide', { num: data.num });
   });
 });
 
